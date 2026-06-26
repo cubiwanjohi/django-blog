@@ -1,0 +1,416 @@
+/* ──────────────────────────────
+   CSS VARIABLES (Light Mode)
+────────────────────────────── */
+:root {
+    --bg-color:       #fafafa;
+    --text-color:     #333;
+    --heading-color:  #111;
+    --link-color:     #0066cc;
+    --card-bg:        #fff;
+    --card-border:    #eee;
+    --nav-bg:         #fff;
+    --nav-border:     #eee;
+    --nav-link:       #555;
+    --meta-color:     #888;
+    --tag-bg:         #f0f0f0;
+    --tag-color:      #555;
+    --input-border:   #ddd;
+    --footer-color:   #aaa;
+    --comment-border: #ddd;
+    --reply-border:   #bbb;
+    --shadow:         rgba(0,0,0,0.08);
+    --btn-bg:         #0066cc;
+    --btn-hover:      #0052a3;
+}
+
+/* ──────────────────────────────
+   CSS VARIABLES (Dark Mode)
+────────────────────────────── */
+body.dark-mode {
+    --bg-color:       #1a1a2e;
+    --text-color:     #e0e0e0;
+    --heading-color:  #ffffff;
+    --link-color:     #4da6ff;
+    --card-bg:        #16213e;
+    --card-border:    #0f3460;
+    --nav-bg:         #16213e;
+    --nav-border:     #0f3460;
+    --nav-link:       #b0b0b0;
+    --meta-color:     #888;
+    --tag-bg:         #0f3460;
+    --tag-color:      #4da6ff;
+    --input-border:   #0f3460;
+    --footer-color:   #666;
+    --comment-border: #0f3460;
+    --reply-border:   #0f3460;
+    --shadow:         rgba(0,0,0,0.3);
+    --btn-bg:         #4da6ff;
+    --btn-hover:      #2196f3;
+}
+
+/* ──────────────────────────────
+   RESET & BASE
+────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ──────────────────────────────
+   LAYOUT
+────────────────────────────── */
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ──────────────────────────────
+   HEADER & NAV
+────────────────────────────── */
+header {
+    background: var(--nav-bg);
+    border-bottom: 2px solid var(--nav-border);
+    padding: 20px 0;
+    margin-bottom: 40px;
+    transition: background-color 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .site-title {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--heading-color);
+    text-decoration: none;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+nav a {
+    color: var(--nav-link);
+    font-size: 0.95em;
+    font-family: Arial, sans-serif;
+}
+
+nav a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* ──────────────────────────────
+   DARK MODE TOGGLE BUTTON
+────────────────────────────── */
+#dark-mode-toggle {
+    background: none;
+    border: 1px solid var(--input-border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 0.85em;
+    color: var(--nav-link);
+    font-family: Arial, sans-serif;
+    transition: all 0.2s;
+}
+
+#dark-mode-toggle:hover {
+    background: var(--tag-bg);
+    color: var(--link-color);
+}
+
+/* ──────────────────────────────
+   MAIN CONTENT
+────────────────────────────── */
+main {
+    min-height: 60vh;
+    padding-bottom: 60px;
+}
+
+h1, h2, h3 {
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    color: var(--heading-color);
+    margin-bottom: 15px;
+    line-height: 1.3;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.6em; }
+h3 { font-size: 1.2em; }
+
+p {
+    margin-bottom: 15px;
+}
+
+/* ──────────────────────────────
+   POST LIST
+────────────────────────────── */
+.post-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 25px;
+    margin-bottom: 25px;
+    transition: box-shadow 0.2s, background-color 0.3s ease;
+}
+
+.post-card:hover {
+    box-shadow: 0 2px 12px var(--shadow);
+}
+
+.post-card h3 {
+    margin-bottom: 8px;
+}
+
+.post-card h3 a {
+    color: var(--heading-color);
+}
+
+.post-card h3 a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* ──────────────────────────────
+   POST META
+────────────────────────────── */
+.post-meta {
+    font-family: Arial, sans-serif;
+    font-size: 0.85em;
+    color: var(--meta-color);
+    margin-bottom: 12px;
+}
+
+.post-meta a {
+    color: var(--meta-color);
+}
+
+.post-meta a:hover {
+    color: var(--link-color);
+}
+
+/* ──────────────────────────────
+   TAGS
+────────────────────────────── */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+}
+
+.tag {
+    background: var(--tag-bg);
+    color: var(--tag-color);
+    font-size: 0.8em;
+    font-family: Arial, sans-serif;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.tag:hover {
+    background: var(--btn-bg);
+    color: #fff;
+    text-decoration: none;
+}
+
+/* ──────────────────────────────
+   POST DETAIL
+────────────────────────────── */
+.post-body {
+    margin-top: 25px;
+    font-size: 1em;
+    line-height: 1.9;
+}
+
+.post-body p {
+    margin-bottom: 20px;
+}
+
+.featured-image {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 25px;
+}
+
+/* ──────────────────────────────
+   COMMENTS
+────────────────────────────── */
+.comments-section {
+    margin-top: 50px;
+    border-top: 2px solid var(--card-border);
+    padding-top: 30px;
+}
+
+.comment {
+    border-left: 3px solid var(--comment-border);
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: var(--card-bg);
+    border-radius: 0 6px 6px 0;
+    transition: background-color 0.3s ease;
+}
+
+.comment .comment-author {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    color: var(--heading-color);
+}
+
+.comment .comment-date {
+    color: var(--meta-color);
+    font-size: 0.8em;
+    margin-left: 8px;
+}
+
+.reply {
+    margin-left: 30px;
+    border-left: 3px solid var(--reply-border);
+    margin-top: 10px;
+}
+
+/* ──────────────────────────────
+   FORMS
+────────────────────────────── */
+.form-group {
+    margin-bottom: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    font-size: 0.95em;
+    font-family: Arial, sans-serif;
+    outline: none;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: border-color 0.2s, background-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    border-color: var(--btn-bg);
+}
+
+button[type="submit"] {
+    background: var(--btn-bg);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: var(--btn-hover);
+}
+
+/* ──────────────────────────────
+   MESSAGES (flash)
+────────────────────────────── */
+.messages {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.messages li {
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+}
+
+.messages .success { background: #d4edda; color: #155724; }
+.messages .error   { background: #f8d7da; color: #721c24; }
+.messages .info    { background: #d1ecf1; color: #0c5460; }
+
+/* ──────────────────────────────
+   PAGINATION
+────────────────────────────── */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+}
+
+.pagination a {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    padding: 6px 14px;
+    border-radius: 4px;
+    color: var(--link-color);
+    transition: background 0.2s;
+}
+
+.pagination a:hover {
+    background: var(--btn-bg);
+    color: #fff;
+    text-decoration: none;
+}
+
+.pagination span {
+    color: var(--meta-color);
+}
+
+/* ──────────────────────────────
+   FOOTER
+────────────────────────────── */
+footer {
+    border-top: 1px solid var(--card-border);
+    padding: 20px 0;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 0.85em;
+    color: var(--footer-color);
+    margin-top: 60px;
+    transition: border-color 0.3s ease;
+}

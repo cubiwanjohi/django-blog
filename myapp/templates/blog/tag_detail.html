@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Tag: {{ tag.name }}{% endblock %}
+
+{% block content %}
+<h1>Posts tagged: <span class="tag">{{ tag.name }}</span></h1>
+
+{% for post in page_obj %}
+    <article>
+        <h2><a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}">{{ post.title }}</a></h2>
+        <div class="post-meta">
+            By <strong>{{ post.author.username }}</strong> |
+            {{ post.publish_date|date:"F j, Y" }} |
+            {% if post.category %}
+                <a href="{% url 'blog:category_detail' post.category.slug %}">{{ post.category.name }}</a>
+            {% endif %}
+        </div>
+        <p>{{ post.excerpt }}</p>
+    </article>
+    <hr>
+{% empty %}
+    <p>No posts with this tag yet.</p>
+{% endfor %}
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

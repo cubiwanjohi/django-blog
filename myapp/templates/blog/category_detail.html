@@ -1,0 +1,38 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Category: {{ category.name }}{% endblock %}
+
+{% block content %}
+<h1>Category: {{ category.name }}</h1>
+
+{% if category.description %}
+    <p>{{ category.description }}</p>
+{% endif %}
+
+{% for post in page_obj %}
+    <article>
+        <h2><a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}">{{ post.title }}</a></h2>
+        <div class="post-meta">
+            By <strong>{{ post.author.username }}</strong> | {{ post.publish_date|date:"F j, Y" }}
+        </div>
+        <p>{{ post.excerpt }}</p>
+    </article>
+    <hr>
+{% empty %}
+    <p>No posts in this category yet.</p>
+{% endfor %}
+
+<!-- Pagination -->
+{% if page_obj.has_other_pages %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+        {% endif %}
+    </div>
+{% endif %}
+
+{% endblock %}

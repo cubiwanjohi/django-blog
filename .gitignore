@@ -1,0 +1,23 @@
+# Virtual environment
+env/
+
+# Database
+db.sqlite3
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment variables
+.env
+
+# Static files collected for deployment
+staticfiles/
+
+# Media uploads
+media/
+
+# VS Code / editor files
+.vscode/
+*.swp

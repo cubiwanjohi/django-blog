@@ -1,0 +1,99 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block meta_description %}{{ post.meta_description|default:post.excerpt }}{% endblock %}
+
+{% block content %}
+
+<!-- Post -->
+<article>
+    <h1>{{ post.title }}</h1>
+
+    <div class="post-meta">
+        By <strong>{{ post.author.username }}</strong> |
+        {{ post.publish_date|date:"F j, Y" }} |
+        {% if post.category %}
+            <a href="{% url 'blog:category_detail' post.category.slug %}">{{ post.category.name }}</a> |
+        {% endif %}
+        {{ post.views_count }} views
+    </div>
+
+    {% if post.featured_image %}
+        <img class="featured-image" src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+    {% endif %}
+
+    <div class="tags">
+        {% for tag in post.tags.all %}
+            <a class="tag" href="{% url 'blog:tag_detail' tag.slug %}">{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+
+    <div class="post-body">
+        {{ post.body|linebreaks }}
+    </div>
+</article>
+
+<hr>
+
+<!-- Comments Section -->
+{% if post.allow_comments %}
+<section class="comments-section">
+    <h2>Comments ({{ comments.count }})</h2>
+
+    {% for comment in comments %}
+        <div class="comment">
+            <span class="comment-author">
+                {% if comment.author %}{{ comment.author.username }}
+                {% else %}{{ comment.guest_name }} (guest){% endif %}
+            </span>
+            <span class="comment-date">{{ comment.created_at|date:"F j, Y" }}</span>
+            <p>{{ comment.body }}</p>
+
+            <!-- Replies -->
+            {% for reply in comment.replies.all %}
+                {% if reply.is_approved %}
+                    <div class="comment reply">
+                        <span class="comment-author">
+                            {% if reply.author %}{{ reply.author.username }}
+                            {% else %}{{ reply.guest_name }} (guest){% endif %}
+                        </span>
+                        <span class="comment-date">{{ reply.created_at|date:"F j, Y" }}</span>
+                        <p>{{ reply.body }}</p>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <!-- Reply form -->
+            <form method="post" action="{% url 'blog:add_comment' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}" style="margin-top: 10px;">
+                {% csrf_token %}
+                {{ form.parent.as_widget }}
+                <input type="hidden" name="parent" value="{{ comment.pk }}">
+                {% if not request.user.is_authenticated %}
+                    <div class="form-group">{{ form.guest_name }} {{ form.guest_email }}</div>
+                {% endif %}
+                <div class="form-group">{{ form.body }}</div>
+                <button type="submit">Reply</button>
+            </form>
+        </div>
+    {% empty %}
+        <p>No comments yet. Be the first!</p>
+    {% endfor %}
+
+    <!-- New comment form -->
+    <h3 style="margin-top: 30px;">Leave a Comment</h3>
+    <form method="post" action="{% url 'blog:add_comment' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}">
+        {% csrf_token %}
+        {% if not request.user.is_authenticated %}
+            <div class="form-group">{{ form.guest_name }}</div>
+            <div class="form-group">{{ form.guest_email }}</div>
+        {% endif %}
+        <div class="form-group">{{ form.body }}</div>
+        <button type="submit">Post Comment</button>
+    </form>
+
+</section>
+{% else %}
+    <p>Comments are disabled for this post.</p>
+{% endif %}
+
+{% endblock %}

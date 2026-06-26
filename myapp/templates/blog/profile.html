@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Profile - {{ request.user.username }}{% endblock %}
+
+{% block content %}
+<h1>{{ request.user.username }}'s Profile</h1>
+<p class="post-meta">Member since {{ request.user.date_joined|date:"F j, Y" }}</p>
+
+<hr>
+
+<!-- Logout button -->
+<form method="post" action="{% url 'blog:logout' %}" style="margin-bottom: 30px;">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+</form>
+
+<!-- User's posts -->
+<h2>Your Posts ({{ user_posts.count }})</h2>
+
+{% for post in user_posts %}
+    <article class="post-card">
+        <h3>
+            <a href="{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}">
+                {{ post.title }}
+            </a>
+        </h3>
+        <div class="post-meta">
+            {{ post.publish_date|date:"F j, Y" }} |
+            <span style="text-transform: capitalize;">{{ post.status }}</span> |
+            {{ post.views_count }} views
+        </div>
+    </article>
+{% empty %}
+    <p>You haven't written any posts yet.</p>
+{% endfor %}
+
+<hr>
+
+<!-- User's recent comments -->
+<h2>Your Recent Comments</h2>
+
+{% for comment in user_comments %}
+    <div class="comment">
+        <span class="comment-date">{{ comment.created_at|date:"F j, Y" }}</span>
+        <p>{{ comment.body }}</p>
+        <p class="post-meta">
+            On: <a href="{% url 'blog:post_detail' comment.post.publish_date.year comment.post.publish_date.month comment.post.publish_date.day comment.post.slug %}">
+                {{ comment.post.title }}
+            </a>
+            — {% if comment.is_approved %}Approved{% else %}Awaiting moderation{% endif %}
+        </p>
+    </div>
+{% empty %}
+    <p>You haven't commented yet.</p>
+{% endfor %}
+
+{% endblock %}
