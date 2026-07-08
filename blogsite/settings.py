@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG       = config('DEBUG', default=False, cast=bool)
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split(',')
-
+CSRF_TRUSTED_ORIGINS = ['https://web-production-57468.up.railway.app']
 
 # ──────────────────────────────
 # APPLICATIONS
@@ -73,14 +73,11 @@ TEMPLATES = [
 # ──────────────────────────────
 # DATABASE
 # ──────────────────────────────
-import dj_database_url
-
 DATABASES = {
     'default': dj_database_url.config(
         default=f'sqlite:///{BASE_DIR / "db.sqlite3"}'
     )
 }
-
 # ──────────────────────────────
 # PASSWORD VALIDATION
 # ──────────────────────────────
